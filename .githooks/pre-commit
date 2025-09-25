@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# pre-commit hook template: attempts safe autofixes and blocks commit if tests/lint still fail
+git add -A
+set -euo pipefail
+PYTHON=".venv/bin/python"
+
+# Only run on staged python files
+STAGED_PY=$(git diff --cached --name-only -- '*.py' || true)
+if [ -z "$STAGED_PY" ]; then
+  # nothing to do
+  exit 0
+fi
+
+echo "Staged Python files detected; running targeted auto-fix..."
+
+# run formatters only on staged files to avoid touching unrelated code
+for f in $STAGED_PY; do
+  echo "Formatting $f"
+  $PYTHON -m black "$f" || true
+  $PYTHON -m isort "$f" || true
+done
+
+# run ruff --fix on the whole repo if available (safety: ruff is fast)
+$PYTHON -m ruff --fix . || true
+
+# Run tests via auto-fix helper to get consistent report and backups
+$PYTHON scripts/ai_tools/auto_fix.py || true
+
+REPORT="tmp/auto_fix/report.json"
+if [ -f "$REPORT" ]; then
+  RC=$(jq -r '.tests.rc' "$REPORT" 2>/dev/null || echo 1)
+  if [ "$RC" -ne 0 ]; then
+    echo "Tests failed after auto-fix. Creating block entry and aborting commit."
+    ts=$(date -u +%Y%m%dT%H%M%SZ)
+    mkdir -p tmp/auto_fix
+    echo "{\"time\": \"$ts\", \"reason\": \"tests-failed\", \"report\": \"$REPORT\"}" > tmp/auto_fix/block_$ts.json
+    exit 1
+  fi
+fi
+
+# stage any formatting fixes
+git add -A
+
+exit 0

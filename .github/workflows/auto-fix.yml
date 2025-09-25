@@ -1,0 +1,31 @@
+name: Auto-fix and validate
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  auto-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.14'
+      - name: Install deps
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/python -m pip install -r requirements.txt || true
+          .venv/bin/python -m pip install ruff black isort pytest || true
+      - name: Run auto-fix helper
+        run: .venv/bin/python scripts/ai_tools/auto_fix.py
+      - name: Upload auto-fix report
+        uses: actions/upload-artifact@v4
+        with:
+          name: auto-fix-report
+          path: tmp/auto_fix
+      - name: Fail if tests failed
+        run: .venv/bin/python scripts/ai_tools/ci_check.py

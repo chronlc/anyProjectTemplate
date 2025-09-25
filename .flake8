@@ -1,0 +1,4 @@
+# flake8 config file
+[flake8]
+exclude = .venv,tmp,.git,.pytest_cache
+max-line-length = 88
