@@ -1,5 +1,3 @@
-import os
-
 from scripts.ai_tools import api_client
 
 

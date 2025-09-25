@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import os
 import sqlite3
-import hashlib
 from typing import Optional
 
 DB_PATH = os.getenv("AI_CACHE_DB", ".ai_cache.sqlite")
@@ -18,7 +17,8 @@ class PromptCache:
         conn = sqlite3.connect(self.path)
         try:
             conn.execute(
-                """CREATE TABLE IF NOT EXISTS cache (key TEXT PRIMARY KEY, value TEXT, ts INTEGER)"""
+                "CREATE TABLE IF NOT EXISTS cache (key TEXT PRIMARY KEY, value "
+                "TEXT, ts INTEGER)"
             )
             conn.commit()
         finally:
@@ -36,7 +36,11 @@ class PromptCache:
     def set(self, key: str, value: str) -> None:
         conn = sqlite3.connect(self.path)
         try:
-            conn.execute("REPLACE INTO cache (key, value, ts) VALUES (?, ?, strftime('%s','now'))", (key, value))
+            conn.execute(
+                "REPLACE INTO cache (key, value, ts) "
+                "VALUES (?, ?, strftime('%s','now'))",
+                (key, value),
+            )
             conn.commit()
         finally:
             conn.close()
