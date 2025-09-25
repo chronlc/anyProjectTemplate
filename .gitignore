@@ -1,0 +1,29 @@
+# Virtual environment
+.venv/
+venv/
+ENV/
+.env
+
+# Auto-fix backups and temp
+tmp/
+
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest cache
+.pytest_cache/
+
+# Editor files
+.vscode/
+.idea/
+
+# Distribution/build
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
