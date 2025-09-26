@@ -1,29 +1,49 @@
-# Virtual environment
-.venv/
-venv/
-ENV/
-.env
 
 # Auto-fix backups and temp
-tmp/
-
-# Python caches
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Pytest cache
-.pytest_cache/
-
-# Editor files
-.vscode/
-.idea/
-
 # Distribution/build
+# Editor files
+# Logs
+# Pytest cache
+# Python caches
+# Virtual environment
+*$py.class
+*.egg-info/
+*.log
+*.py[cod]
+*.pyc
+.ai_cache.sqlite
+.env
+.idea/
+.pytest_cache/
+.venv/
+.vscode/
+ENV/
+__pycache__/
 build/
 dist/
+tmp/
+venv/
+# Python
+__pycache__/
+*.py[cod]
 *.egg-info/
-
-# Logs
 *.log
 
+# Virtual environments
+.venv/
+venv/
+
+# Local tooling / cache
+.ai_cache.sqlite
+*.db
+
+# Debug + scratch files
+debug/
+memory/
+
+# VSCode
+.vscode/
+
+# System
+.DS_Store
+Thumbs.db

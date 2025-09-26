@@ -1,0 +1,9 @@
+[tool.pytest]
+minversion = "7.0"
+testpaths = ["tests"]
+
+[tool.flake8]
+# exclude virtualenv and generated temp files
+# use array form to be explicit for toml parsing
+exclude = [".venv", "tmp", ".git", ".pytest_cache"]
+max-line-length = 88

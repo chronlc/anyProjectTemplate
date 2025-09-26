@@ -1,0 +1,22 @@
+{
+  "project_name": "MyNewApp",
+  "description": "An example cross-platform project managed with anyProject.",
+  "platform": "android",
+  "language": "kotlin",
+  "dependencies": [
+    "retrofit",
+    "room",
+    "coroutines"
+  ],
+  "features": {
+    "authentication": true,
+    "offline_mode": false,
+    "push_notifications": true
+  },
+  "target_sdk": 34,
+  "min_sdk": 24,
+  "author": "Your Name",
+  "version": "0.1.0",
+  "license": "MIT"
+}
+

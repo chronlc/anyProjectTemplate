@@ -1,0 +1,14 @@
+{
+  "vectorDB": {
+    "enabled": true,
+    "path": "/home/user/DEVCoDE/@anyProjectTemplate/memory/vector_store.json"
+  },
+  "adb": {
+    "device": "auto",
+    "default_timeout": 10
+  },
+  "logging": {
+    "level": "INFO",
+    "color": true
+  }
+}
